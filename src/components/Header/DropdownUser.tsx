@@ -2,9 +2,21 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+
+  const logoutHandler = async () => {
+    try {
+      await axios.post(`${process.env.SERVER}/api/v1/user/logout`, {}, { withCredentials: true });
+      router.push('/login');
+    } catch (error: any) {
+        console.error("Logout failed:", error.response?.data?.message || error.message);
+    }
+  }
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -128,7 +140,7 @@ const DropdownUser = () => {
               </Link>
             </li>
           </ul>
-          <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button onClick={logoutHandler} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <svg
               className="fill-current"
               width="22"
