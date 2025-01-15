@@ -6,6 +6,7 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { UserProvider } from "@/context/globalProvider";
+import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 export default function RootLayout({
   children,
@@ -22,14 +23,8 @@ export default function RootLayout({
   }, []);
 
   return (
-    <UserProvider>
-      <html lang="en">
-        <body suppressHydrationWarning={true}>
-          <div className="dark:bg-boxdark-2 dark:text-bodydark">
-            {loading ? <Loader /> : children}
-          </div>
-        </body>
-      </html>
-    </UserProvider>
+    <DefaultLayout>
+      {children}
+    </DefaultLayout>
   );
 }

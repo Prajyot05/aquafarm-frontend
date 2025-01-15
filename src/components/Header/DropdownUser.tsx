@@ -11,7 +11,7 @@ const DropdownUser = () => {
 
   const logoutHandler = async () => {
     try {
-      await axios.post(`${process.env.SERVER}/api/v1/user/logout`, {}, { withCredentials: true });
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/api/v1/user/logout`, {}, { withCredentials: true });
       router.push('/login');
     } catch (error: any) {
         console.error("Logout failed:", error.response?.data?.message || error.message);
