@@ -8,6 +8,7 @@ import TableOne from "../Tables/TableOne";
 import CardDataStats from "../CardDataStats";
 import Link from "next/link";
 import { useUserContext } from "@/context/globalProvider";
+import { getUserInfo } from "@/middleware";
 
 const MapOne = dynamic(() => import("@/components/Maps/MapOne"), {
   ssr: false,
@@ -19,16 +20,15 @@ const ChartThree = dynamic(() => import("@/components/Charts/ChartThree"), {
 
 const ECommerce: React.FC = () => {
   const { userInfo, setUserInfo } = useUserContext();
-  console.log('User Info:', userInfo);
   
   useEffect(() => {
-    setUserInfo({
-      id: '67836edf5eeb201794dba41d',
-      username: 'superAdmin',
-      emailId: undefined,
-      phone: 'superAdminPhone',
-      role: 'SUPERADMIN'
-    });
+    // Where do I put this?
+    const getUserInfoFromMiddleware = async () => {
+      const userInfo = await getUserInfo();
+      console.log('User Info:', userInfo);
+      userInfo && setUserInfo(userInfo);
+    }
+    getUserInfoFromMiddleware();
   }, [])
 
   return (

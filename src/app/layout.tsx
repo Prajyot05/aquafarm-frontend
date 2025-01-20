@@ -5,7 +5,8 @@ import "@/css/satoshi.css";
 import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
-import { UserProvider } from "@/context/globalProvider";
+import { UserProvider, useUserContext } from "@/context/globalProvider";
+import { getUserInfo } from "@/middleware";
 
 export default function RootLayout({
   children,

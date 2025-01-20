@@ -2,11 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 import axios from "axios";
-import { useUserContext } from "./context/globalProvider";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-const getUserInfo = async () => {
+export const getUserInfo = async () => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER}/api/v1/user/admin`,
