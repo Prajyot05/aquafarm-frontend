@@ -1,16 +1,9 @@
+import { User } from '@/types/user';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type UserInfo = {
-  id: string;
-  username: string;
-  emailId?: string;
-  phone: string;
-  role: string;
-} | null;
-
 interface UserContextProps {
-  userInfo: UserInfo;
-  setUserInfo: (userInfo: UserInfo) => void;
+  userInfo: User;
+  setUserInfo: (userInfo: User) => void;
   clearUserInfo: () => void;
 }
 
@@ -29,9 +22,9 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [userInfo, setUserInfoState] = useState<UserInfo>(null);
+  const [userInfo, setUserInfoState] = useState<User>(null);
 
-  const setUserInfo = (userInfo: UserInfo) => {
+  const setUserInfo = (userInfo: User) => {
     setUserInfoState(userInfo);
   };
 

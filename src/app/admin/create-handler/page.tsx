@@ -2,40 +2,31 @@
 
 import { useUserContext } from "@/context/globalProvider";
 import axios from "axios";
-import { redirect } from "next/navigation";
 import { useState } from "react";
 
-export default function AdminCreate() {
+export default function CreateHandler() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    emailId: "",
-    phone: "",
-    pondName: "",
-    pondAddress: "",
+    phone: ""
   });
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-
-  const { userInfo } = useUserContext();
-
-  if(userInfo?.role !== "SUPERADMIN") return redirect("/");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleCreateAdmin = async (e: React.FormEvent) => {
+  const createHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER}/api/v1/user/admin/create`,
+        `${process.env.NEXT_PUBLIC_SERVER}/api/v1/user/handler/create`,
         formData,
         { withCredentials: true }
       );
@@ -45,31 +36,25 @@ export default function AdminCreate() {
       setFormData({
           username: "",
           password: "",
-          emailId: "",
-          phone: "",
-          pondName: "",
-          pondAddress: "",
+          phone: ""
         });
-        alert("Admin has been successfully created!");
+        alert("Handler has been successfully created!");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to create admin");
+      setError(err.response?.data?.message || "Failed to create Handler");
     }
   };
 
   return (
     <div className="m-auto w-[90%] sm:w-3/4 md:w-1/2">
       <h1 className="text-center text-4xl font-bold text-black dark:text-white">
-        Create Admin
+        Create Handler
       </h1>
-      <form onSubmit={handleCreateAdmin}>
+      <form onSubmit={createHandler}>
         <div className="p-6.5">
           {[
             "username",
             "password",
-            "emailId",
-            "phone",
-            "pondName",
-            "pondAddress",
+            "phone"
           ].map((field) => (
             <div className="mb-4.5" key={field}>
               <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -91,7 +76,7 @@ export default function AdminCreate() {
             type="submit"
             className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
           >
-            Create Admin
+            Create Handler
           </button>
         </div>
         {error && <p className="text-center text-danger">{error}</p>}
